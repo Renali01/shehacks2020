@@ -1,0 +1,147 @@
+#
+## shehacks questionnaire
+#
+
+# appears after sign up in order to filter choices based on preferences
+
+
+# opening statement
+print("Welcome to ONEhome. We would love to get to know you more to help find your perfect match!")
+
+# initialize variables
+type = 0
+numRooms = 0
+distance = 0
+priceMin = 0
+priceMax = 0
+
+# following figma, click on arrow to display options - select only one of options (code: "yes" to select)
+print("(1) TYPE")
+choice = input("Apartment? y/n")
+if choice == "y":
+    type = "a"
+else:
+    choice = input("House? y/n")
+    if choice == "y":
+        type = "b"
+
+print("(2) NUMBER OF BEDROOMS")
+choice = input("1-3 bedrooms? y/n")
+if choice == "y":
+    numRooms = "a"
+else:
+    choice = input("4-6 bedrooms? y/n")
+    if choice == "y":
+        numRooms = "b"
+    else:
+        choice = input("More than 7 bedrooms? y/n")
+        if choice == "y":
+            numRooms = "c"
+
+print("(3) DISTANCE FROM YOU")
+choice = input("Less than 2 km? y/n")
+if choice == "y":
+    distance = "a"
+else:
+    choice = input("Between 2km to 4km?")
+    if choice == "y":
+        distance = "b"
+    else:
+        choice = input("Farther than 4km? y/n")
+        if choice == "y":
+            distance = "c"
+
+print("(4) RENT MIN")
+choice = input("No price floor? y/n")
+if choice == "y":
+    priceMin = "a"
+else:
+    choice = input("$300/month price floor? y/n")
+    if choice == "y":
+        priceMin = "b"
+    else:
+        choice = input("$500/month price floor? y/n")
+        if choice == "y":
+            priceMin = "c"
+
+print("(5) RENT MAX")
+choice = input("No price ceiling? y/n")
+if choice == "y":
+    priceMax = "a"
+else:
+    choice = input("$900/month price floor? y/n")
+    if choice == "y":
+        priceMax = "b"
+    else:
+        choice = input("$700/month price floor? y/n")
+        if choice == "y":
+            priceMax = "c"
+
+
+print("Thank you. We are now finding your perfect match...")
+
+print(type, numRooms, distance, priceMin, priceMax)
+
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from IPython.display import display
+
+%matplotlib inline
+
+housing = pd.read_csv('housing_Data.csv') #reads in a csv into python
+housing.head()
+print(housing)
+
+is_apartment = housing.type == 'apartment'
+
+booleans2 = []
+if numRooms == "a":
+    for number in housing.numRooms:
+        if number <= 3:
+            booleans2.append(True)
+        else:
+            booleans2.append(False)
+elif numRooms == "b":
+    for number in housing.numRooms:
+        if number > 3 and number <= 6:
+            booleans2.append(True)
+        else:
+            booleans2.append(False)
+else:
+    for number in housing.numRooms:
+        if number > 6:
+            booleans2.append(True)
+        else:
+            booleans2.append(False)
+            
+is_room = pd.Series(booleans2)
+
+housing[is_room]
+
+booleans3 = []
+if distance == "a":
+    for number in housing.distance:
+        if number <= 2:
+            booleans3.append(True)
+        else:
+            booleans3.append(False)
+elif distance == "b":
+    for number in housing.distance:
+        if number > 2 and number <= 4:
+            booleans3.append(True)
+        else:
+            booleans3.append(False)
+else:
+    for number in housing.distance:
+        if number > 4:
+            booleans3.append(True)
+        else:
+            booleans3.append(False)
+
+is_distance = pd.Series(booleans3)
+
+housing[is_distance]
+
+housing.loc[is_apartment&is_room&is_distance]
