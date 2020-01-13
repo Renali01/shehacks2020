@@ -1,0 +1,14 @@
+## sample housing data
+
+companyName,type,numRooms,distance,price
+RedBricks,apartment,2,1.3,550
+RedBricks,apartment,4,1.8,600
+RedBricks,house,5,1.6,700
+RedBricks,house,7,2.1,730
+Luxe,apartment,4,2.1,750
+Luxe,apartment,3,2.8,825
+Luxe,house,8,3.9,780
+PadRentals,house,5,4.2,815
+PadRentals,house,6,5.1,790
+PadRentals,house,9,4.1,800
+
